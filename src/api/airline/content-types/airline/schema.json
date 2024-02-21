@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "airlines",
+  "info": {
+    "singularName": "airline",
+    "pluralName": "airlines",
+    "displayName": "Airline",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "alias": {
+      "type": "string"
+    },
+    "iata_code": {
+      "type": "string"
+    },
+    "icao_code": {
+      "type": "string"
+    }
+  }
+}
