@@ -849,6 +849,41 @@ export interface ApiCountryCountry extends Schema.CollectionType {
   };
 }
 
+export interface ApiFlightFlight extends Schema.CollectionType {
+  collectionName: 'flights';
+  info: {
+    singularName: 'flight';
+    pluralName: 'flights';
+    displayName: 'Flight';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    origin_airport_code: Attribute.String;
+    destination_airport_code: Attribute.String;
+    airline_iata_code: Attribute.String;
+    airline_icao_code: Attribute.String;
+    departure_time: Attribute.DateTime;
+    arrival_time: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::flight.flight',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::flight.flight',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -869,6 +904,7 @@ declare module '@strapi/types' {
       'plugin::i18n.locale': PluginI18NLocale;
       'api::airline.airline': ApiAirlineAirline;
       'api::country.country': ApiCountryCountry;
+      'api::flight.flight': ApiFlightFlight;
     }
   }
 }

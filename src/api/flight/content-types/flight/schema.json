@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "flights",
+  "info": {
+    "singularName": "flight",
+    "pluralName": "flights",
+    "displayName": "Flight"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "origin_airport_code": {
+      "type": "string"
+    },
+    "destination_airport_code": {
+      "type": "string"
+    },
+    "airline_iata_code": {
+      "type": "string"
+    },
+    "airline_icao_code": {
+      "type": "string"
+    },
+    "departure_time": {
+      "type": "datetime"
+    },
+    "arrival_time": {
+      "type": "datetime"
+    }
+  }
+}
