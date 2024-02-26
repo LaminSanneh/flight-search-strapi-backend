@@ -1,0 +1,1 @@
+update flights set departure_time = date_add(now(), interval 30 * id minute), arrival_time = date_add(departure_time, interval FLOOR(RAND() * (600-60) + 60) minute);

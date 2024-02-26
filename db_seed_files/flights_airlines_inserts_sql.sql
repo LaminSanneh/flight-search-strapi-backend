@@ -1,0 +1,1 @@
+insert into `flights_airline_links` select null, fa_links.flight_id, fa_links.airline_id, null from (select flights.id as flight_id, airlines.id as airline_id from flights inner join airlines on flights.`airline_iata_code` = airlines.iata_code where airlines.iata_code is not null) as fa_links;
