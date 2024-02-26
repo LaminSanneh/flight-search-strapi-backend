@@ -60,7 +60,6 @@ $RECYCLE.BIN/
 *.out
 *.pid
 
-
 ############################
 # Logs and databases
 ############################
@@ -112,3 +111,5 @@ exports
 dist
 build
 .strapi-updater.json
+
+!db_seed_files/*
