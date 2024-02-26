@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "airports",
+  "info": {
+    "singularName": "airport",
+    "pluralName": "airports",
+    "displayName": "Airport",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country_name": {
+      "type": "string"
+    },
+    "iata_code": {
+      "type": "string"
+    },
+    "icao_code": {
+      "type": "string"
+    },
+    "altitude": {
+      "type": "string"
+    },
+    "utc_offset_hours": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    }
+  }
+}

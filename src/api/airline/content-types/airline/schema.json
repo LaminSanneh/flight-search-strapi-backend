@@ -23,6 +23,12 @@
     },
     "icao_code": {
       "type": "string"
+    },
+    "flights": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::flight.flight",
+      "mappedBy": "airline"
     }
   }
 }

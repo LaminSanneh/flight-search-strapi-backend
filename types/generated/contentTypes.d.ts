@@ -585,6 +585,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -736,53 +783,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiAirlineAirline extends Schema.CollectionType {
   collectionName: 'airlines';
   info: {
@@ -799,6 +799,11 @@ export interface ApiAirlineAirline extends Schema.CollectionType {
     alias: Attribute.String;
     iata_code: Attribute.String;
     icao_code: Attribute.String;
+    flights: Attribute.Relation<
+      'api::airline.airline',
+      'oneToMany',
+      'api::flight.flight'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -810,6 +815,45 @@ export interface ApiAirlineAirline extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::airline.airline',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiAirportAirport extends Schema.CollectionType {
+  collectionName: 'airports';
+  info: {
+    singularName: 'airport';
+    pluralName: 'airports';
+    displayName: 'Airport';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    city: Attribute.String;
+    country_name: Attribute.String;
+    iata_code: Attribute.String;
+    icao_code: Attribute.String;
+    altitude: Attribute.String;
+    utc_offset_hours: Attribute.String;
+    latitude: Attribute.Float;
+    longitude: Attribute.Float;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::airport.airport',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::airport.airport',
       'oneToOne',
       'admin::user'
     > &
@@ -855,6 +899,7 @@ export interface ApiFlightFlight extends Schema.CollectionType {
     singularName: 'flight';
     pluralName: 'flights';
     displayName: 'Flight';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -866,6 +911,22 @@ export interface ApiFlightFlight extends Schema.CollectionType {
     airline_icao_code: Attribute.String;
     departure_time: Attribute.DateTime;
     arrival_time: Attribute.DateTime;
+    source_airport: Attribute.Relation<
+      'api::flight.flight',
+      'oneToOne',
+      'api::airport.airport'
+    >;
+    destination_airport: Attribute.Relation<
+      'api::flight.flight',
+      'oneToOne',
+      'api::airport.airport'
+    >;
+    aircraft_code: Attribute.String;
+    airline: Attribute.Relation<
+      'api::flight.flight',
+      'manyToOne',
+      'api::airline.airline'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -898,11 +959,12 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
       'api::airline.airline': ApiAirlineAirline;
+      'api::airport.airport': ApiAirportAirport;
       'api::country.country': ApiCountryCountry;
       'api::flight.flight': ApiFlightFlight;
     }

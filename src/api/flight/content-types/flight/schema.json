@@ -4,7 +4,8 @@
   "info": {
     "singularName": "flight",
     "pluralName": "flights",
-    "displayName": "Flight"
+    "displayName": "Flight",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -28,6 +29,25 @@
     },
     "arrival_time": {
       "type": "datetime"
+    },
+    "source_airport": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::airport.airport"
+    },
+    "destination_airport": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::airport.airport"
+    },
+    "aircraft_code": {
+      "type": "string"
+    },
+    "airline": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::airline.airline",
+      "inversedBy": "flights"
     }
   }
 }
